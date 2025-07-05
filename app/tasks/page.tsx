@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 const statusColors = {
   pending: "text-yellow-500",
@@ -45,10 +46,19 @@ export default function TasksPage() {
     priority: "medium",
   });
 
+  const router = useRouter();
+
   useEffect(() => {
     const newtoken = localStorage?.getItem("access_token");
     setToken(newtoken as any);
   }, []);
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("access_token");
+  //   if (token) {
+  //     router.push("/");
+  //   }
+  // }, [router]);
 
   const fetchTasks = async (status = "", priority = "") => {
     setTasks([]);
