@@ -57,7 +57,7 @@ export default function TasksPage() {
     if (priority) query += `${query ? "&" : ""}priority=${priority}`;
 
     const res = await fetch(
-      `http://localhost:3000/tasks${query ? "?" + query : ""}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/tasks${query ? "?" + query : ""}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export default function TasksPage() {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:3000/tasks", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -116,14 +116,17 @@ export default function TasksPage() {
     );
     setTasks(updatedTasks as any); // update local state
 
-    const res = await fetch(`http://localhost:3000/tasks/${id}/${key}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ [key]: value }),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/tasks/${id}/${key}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ [key]: value }),
+      }
+    );
 
     if (!res.ok) {
       Swal.fire({

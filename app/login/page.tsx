@@ -29,11 +29,14 @@ export default function LoginPage() {
   });
 
   const onSubmit = async (data: AuthSchema) => {
-    const res = await fetch("http://localhost:3000/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }
+    );
 
     const responseData = await res.json();
     const accessToken = responseData.access_token;

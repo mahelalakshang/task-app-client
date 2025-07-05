@@ -29,11 +29,14 @@ export default function RegisterPage() {
   });
 
   const onSubmit = async (data: AuthSchema) => {
-    const res = await fetch("http://localhost:3000/auth/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signup`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }
+    );
 
     if (res.ok) {
       await Swal.fire({
